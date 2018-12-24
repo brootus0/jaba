@@ -1,3 +1,7 @@
+//connect one wire of push button to digital pin. connect the same wire to vcc "via a 10K resistor". Conncet the other wire to GND.
+
+
+
 #include "PinChangeInt.h" // PinChange Interrupt library
 #define buttonpin 11 // Rotary CLK pin connected to UNO normal pin 11
 int count=1;
