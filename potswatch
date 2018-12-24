@@ -1,0 +1,47 @@
+#include <PinChangeInt.h>
+
+int sec=00;
+int min=00;
+int hr=00;
+const int  buttonPin = 4;    // the pin that the pushbutton is attached to
+const int ledPin = 13;       // the pin that the LED is attached to
+int buttonPushCounter = 0;   // counter for the number of button presses
+int buttonState = 0;         // current state of the button
+int lastButtonState = 0;     // previous state of the button
+void setup() {
+  pinMode(buttonPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+
+void loop() {
+Serial.print(hr);
+Serial.print(":");
+Serial.print(min);
+Serial.print(":");
+Serial.println(sec);
+sec=sec+1;
+delay(1000);
+if(sec == 60){
+  sec=00;
+  min=min+1; 
+}else;
+if(min == 60){
+  min=0;
+  hr=hr+1;
+}else;
+buttonState = digitalRead(buttonPin);
+  if (buttonState != lastButtonState) {
+    if (buttonState == HIGH) {
+      reset();
+    } else;
+    }
+    delay(50);
+  
+  lastButtonState = buttonState;
+}
+
+void reset(){
+  hr=min=sec=0;
+}
