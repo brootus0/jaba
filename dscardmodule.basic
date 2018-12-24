@@ -1,0 +1,43 @@
+//connect CS to 4, SCK to 13, MOSI to 11, MISO to 12, VCC to 5V, GND to GND
+
+#include <SPI.h>
+#include <SD.h>
+
+File myFile2;
+
+void setup() {
+  Serial.begin(9600);
+  while (!Serial) {
+  }
+
+
+  Serial.print("Initializing SD card...");
+  if (!SD.begin(4)) {
+    Serial.println("initialization failed!");
+    while (1);
+  }
+  Serial.println("initialization done.");
+  myFile2 = SD.open("jumbo.txt", FILE_WRITE);
+  if (myFile2) {
+    Serial.print("Writing to jumbo.txt...");
+    myFile2.println("fuck you jumbo");
+    myFile2.close();
+    Serial.println("done.");
+  } else {
+    Serial.println("error opening jumbo.txt");
+  }
+  myFile2 = SD.open("jumbo.txt");
+  if (myFile2) {
+    Serial.println("jumbo.txt:");
+    while (myFile2.available()) {
+      Serial.write(myFile2.read());
+    }
+    myFile2.close();
+  } else {
+    Serial.println("error opening jumbo.txt");
+  }
+}
+
+void loop() {
+  // nothing happens after setup
+}
