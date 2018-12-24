@@ -1,0 +1,23 @@
+#include "PinChangeInt.h" // PinChange Interrupt library
+int count;
+#define buttonpin 11 // Rotary CLK pin connected to UNO normal pin 11
+
+
+void buttonpintask () {
+delay(50); // delay for Debouncing Rotary Encoder
+if (digitalRead(buttonpin)) {
+Serial.print("pressed_");
+count=count+1;
+Serial.println(count);
+}
+}
+
+void setup () {
+Serial.begin(9600);
+pinMode(buttonpin, INPUT); // Set normal 8 pin to Input
+attachPinChangeInterrupt(buttonpin, buttonpintask, CHANGE); // interrupt connected to pin 11
+}
+
+void loop () {
+// do nothing
+}
