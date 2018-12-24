@@ -1,0 +1,65 @@
+
+
+volatile byte revolutions1;
+volatile byte revolutions2;
+
+
+
+ unsigned int rpm1;
+ unsigned int rpm2;
+ 
+ unsigned long timeold1;
+ unsigned long timeold2;
+
+
+void setup()
+{
+
+Serial.begin(9600);
+attachInterrupt(0, function1, RISING);
+attachInterrupt(1, function2, RISING);
+
+
+  revolutions1 = 0;
+  revolutions2 = 0;
+  
+   rpm1 = 0;
+   rpm2 = 0;
+ 
+   timeold1 = 0;
+   timeold2 = 0;
+
+}
+
+void loop() {
+
+   if (revolutions1 >= 0) 
+   { 
+     rpm1 = 30*1000/(millis() - timeold1)*revolutions1;
+     timeold1 = millis();
+     revolutions1 = 0;
+   }
+
+   if (revolutions2 >= 0) 
+   { 
+     rpm2 = 30*1000/(millis() - timeold2)*revolutions2;
+     timeold2 = millis();
+     revolutions2 = 0;
+   }
+
+
+Serial.print("rpm1_");
+Serial.print(rpm1);
+Serial.print("__rpm2_");
+Serial.println(rpm2);
+delay(1000);
+}
+
+void function1()
+{
+ revolutions1++;
+}
+void function2()
+ {
+   revolutions2++;
+ }
